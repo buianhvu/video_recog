@@ -21,5 +21,8 @@ print(xx0.shape)
 print(yy.shape)
 print(yy0.shape)
 
-# Z = slib.cal_Z(xx, 5)
-# Ws = slib.msda_z(xx,Z,0.6,4,1)
+Z = slib.cal_Z(xx, 5)
+Ws = slib.msda_z(xx,Z,0.6,4,1)
+
+print(Z.shape)
+print(Ws.shape)
