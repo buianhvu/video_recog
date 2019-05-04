@@ -24,7 +24,7 @@ def cal_Z(xx,V):
 	Z = np.zeros((0,0))
 	for i in range(n):
 		Z = scipy.linalg.block_diag(Z, K[:,:,i])
-	print Z.shape
+	print(Z.shape)
 	return Z
 	pass
 
