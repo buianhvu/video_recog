@@ -38,5 +38,5 @@ W = W[:,0:8000]
 x_test_clf = (W.dot(xx4)).transpose()
 y_test_clf = yy4.reshape(yy4.shape[1],)
 score = clf.score(x_test_clf, y_test_clf)
-# print("Score train on , test on X1: {}".format(score))
+print("Score train on , test on X1: {}".format(score))
 
