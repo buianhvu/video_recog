@@ -9,7 +9,7 @@ def cal_Z(xx,V):
 	#n != N
 	#V domian size
 	d, N = xx.shape
-	n = N/V
+	n = N/5
 	K = np.zeros((V,V,n))
 	for k in range(n):
 		for i in range(V):
@@ -28,7 +28,7 @@ def cal_Z(xx,V):
 	return Z
 	pass
 
-def mda_z(xx, Z, noise, _lambda):
+def mda_z(xx, Z, noise, _lambda, G):
 	d, n = xx.shape
 	#adding bias
 	b_mt = np.ones((1,n))
@@ -56,13 +56,13 @@ def mda_z(xx, Z, noise, _lambda):
 	# print("reg shape {}".format(reg.shape))
 	reg[d,d] = 0
 	#W dx(d+1)
-	W = P.dot((Q+reg).transpose())
+	W = P.dot(np.linalg.inv(Q+reg))
 	# print("W shape {}".format(W.shape))
 	hx = W.dot(xxb)
 	hx = np.tanh(hx)
 	return W, hx
 	pass
-def msda_z(xx, Z, noise, layers, lambda_):
+def msda_z(xx, Z, G, noise, layers, lambda_):
 
 	#xx : dxn input
 	#noise: corruption level
@@ -88,10 +88,16 @@ def msda_z(xx, Z, noise, layers, lambda_):
 
 # mda_z(fake_xx, fake_z, 0.8, 1)
 
+xx_0 = np.random.rand(3,5)
+xx_1 = np.random.rand(3,5)
+xx_2 = np.random.rand(3,5)
+xx_3 = np.random.rand(3,5)
+xx_4= np.random.rand(3,5)
+G = [xx_0, xx_1, xx_2, xx_3,xx_4]
 
 
-# xx_ = np.random.rand(3, 25)
-# xx_ = np.array(xx_)
-# Z = cal_Z(xx_, 5)
-# print("**********START")
-# msda_z(xx_,Z,0.6,4,1)
+xx_ = np.concatenate((xx_0, xx_1, xx_2,xx_3,xx_4), axis = 1)
+xx_ = np.array(xx_)
+Z = cal_Z(xx_, 5)
+print("**********START")
+msda_z(xx_,Z, G,0.6,4,1)

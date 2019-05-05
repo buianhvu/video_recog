@@ -16,13 +16,13 @@ yy = np.concatenate((yy0, yy1, yy2, yy3, yy4), axis = 1)
 # yy0,yy1,yy2,yy3,yy4 = yy[0,:], 
 print("done loading")
 
-print(xx.shape)
-print(xx0.shape)
-print(yy.shape)
-print(yy0.shape)
+# print(xx.shape)
+# print(xx0.shape)
+# print(yy.shape)
+# print(yy0.shape)
 
-Z = slib.cal_Z(xx, 5)
-Ws = slib.msda_z(xx,Z,0.6,4,1)
+Z = slib.cal_Z(xx0, 1)
+Ws = slib.msda_z(xx0,Z,0.6,4,1)
 
 print(Z.shape)
 print(Ws.shape)
