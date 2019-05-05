@@ -39,7 +39,7 @@ biases = np.ones((1, 330))
 print(xx4.shape)
 print(biases.shape)
 xx4 = np.concatenate((xx4,biases), axis=0)
-xx4 = Ws[-1]*xx4
+xx4 = Ws[-1].dot(xx4)
 x_test_clf = xx4.transpose()
 y_test_clf = yy4.reshape(yy4.shape[1],)
 score = clf.score(x_test_clf, y_test_clf)
