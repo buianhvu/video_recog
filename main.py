@@ -19,7 +19,6 @@ yy = np.concatenate((yy0, yy1, yy2, yy3, yy4), axis = 1)
 print("done loading")
 
 
-
 # print(xx.shape)
 # print(xx0.shape)
 # print(yy.shape)
@@ -32,10 +31,11 @@ Ws = slib.msda_z(xx0,Z,0.6,4)
 
 x_clf = xx0.transpose()
 clf = SVC(gamma='auto')
+yy0 = yy0.reshape(yy0.shape[1],)
 clf.fit(x_clf, yy0)
 W = W[-1]
 x_test_clf = (W.dot(xx1)).transpose()
-y_test_clf = yy1
+y_test_clf = yy1.reshape(yy1.shape[1],)
 score = clf.score(x_test_clf, y_test_clf)
 print("Score train on X0, test on X1: {}".format(score))
 
