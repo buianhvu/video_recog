@@ -12,9 +12,9 @@ xx2 = np.load("vectors/xx_2.npy").transpose()
 xx3 = np.load("vectors/xx_3.npy").transpose()
 xx4 = np.load("vectors/xx_4.npy").transpose()
 
-xx = np.concatenate((xx0,xx1,xx2,xx3, xx4),axis = 1) #xx dxn
+xx = np.concatenate((xx0,xx1,xx2,xx3),axis = 1) #xx dxn
 yy0,yy1,yy2,yy3,yy4 = yy[0,:], yy[1,:], yy[2,:], yy[3,:], yy[4,:]
-yy = np.concatenate((yy0, yy1, yy2, yy3, yy4), axis = 1)
+yy = np.concatenate((yy0, yy1, yy2, yy3), axis = 1)
 # yy0,yy1,yy2,yy3,yy4 = yy[0,:], 
 print("done loading")
 
@@ -34,10 +34,10 @@ x_clf = hx.transpose()
 clf = SVC(gamma='auto')
 yy = yy.reshape(yy.shape[1],)
 clf.fit(x_clf, yy)
-W = Ws[-1]
-W = W[:,0:8000]
-x_test_clf = (W.dot(xx4)).transpose()
+# W = Ws[-1]
+# W = W[:,0:8000]
+x_test_clf = xx4.transpose()
 y_test_clf = yy4.reshape(yy4.shape[1],)
 score = clf.score(x_test_clf, y_test_clf)
-print("Score train on , test on X1: {}".format(score))
+# print("Score train on , test on X1: {}".format(score))
 
