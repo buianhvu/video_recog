@@ -24,6 +24,7 @@ print("done loading")
 # print(yy.shape)
 # print(yy0.shape)
 
+
 print("Data input shape {}".format(xx0.shape))
 Z = slib.cal_Z(xx0, 1)
 print("Finish")
@@ -34,6 +35,7 @@ clf = SVC(gamma='auto')
 yy0 = yy0.reshape(yy0.shape[1],)
 clf.fit(x_clf, yy0)
 W = Ws[-1]
+W = W[:,0:8000]
 x_test_clf = (W.dot(xx1)).transpose()
 y_test_clf = yy1.reshape(yy1.shape[1],)
 score = clf.score(x_test_clf, y_test_clf)
