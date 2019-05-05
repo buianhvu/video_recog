@@ -34,13 +34,15 @@ x_clf = hx.transpose()
 clf = SVC(gamma='auto')
 yy = yy.reshape(yy.shape[1],)
 clf.fit(x_clf, yy)
-# W = Ws[-1]
-# W = W[:,0:8000]
-biases = np.ones((8000, 130))
+
+biases = np.ones((8000, 1320))
+print(xx.shape)
+print(biases.shape)
 xx4 = np.concatenate((xx4,biases), axis=0)
 xx4 = Ws[-1]*xx4
 x_test_clf = xx4.transpose()
 y_test_clf = yy4.reshape(yy4.shape[1],)
 score = clf.score(x_test_clf, y_test_clf)
+print("calculating score ...")
 print("Score train on , test on X1: {}".format(score))
 
