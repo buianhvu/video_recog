@@ -33,7 +33,7 @@ x_clf = xx0.transpose()
 clf = SVC(gamma='auto')
 yy0 = yy0.reshape(yy0.shape[1],)
 clf.fit(x_clf, yy0)
-W = W[-1]
+W = Ws[-1]
 x_test_clf = (W.dot(xx1)).transpose()
 y_test_clf = yy1.reshape(yy1.shape[1],)
 score = clf.score(x_test_clf, y_test_clf)
