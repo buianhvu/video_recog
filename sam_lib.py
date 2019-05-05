@@ -18,12 +18,13 @@ def cal_Z(xx,V):
 				if i == j:
 					K[i, j, k] = 0
 				else:
-					K[i, j, k] = math.exp(-math.sqrt(np.sum(np.square(xx[:,k+n*i]-xx[:,k+n*j]), dtype = np.double)))/(2*2)
+					K[i, j, k] = math.exp(-math.sqrt(np.sum(np.square(xx[:,k+n*i]-xx[:,k+n*j]))))/(2*2)
 			
 	# Z = np.zeros((V*n, V*n))
-	Z = np.zeros((0,0))
+	Z = K[:,:,0]
 	for i in range(n):
-		Z = scipy.linalg.block_diag(Z, K[:,:,i])
+		if i != 0:
+			Z = scipy.linalg.block_diag(Z, K[:,:,i])
 	print(Z.shape)
 	return Z
 	pass
