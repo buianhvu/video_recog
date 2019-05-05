@@ -62,8 +62,8 @@ def mda_z(xx, Z, noise, _lambda):
 	hx = np.tanh(hx)
 	return W, hx
 	pass
-def msda_z(xx, Z, noise, layers, lambda_):
-
+def msda_z(xx, Z, noise, layers):
+	lambda_ = 0.00001
 	#xx : dxn input
 	#noise: corruption level
 	#layers: number of layers to stack
@@ -77,7 +77,7 @@ def msda_z(xx, Z, noise, layers, lambda_):
 	for layer in range(layers):
 		print("**Layer number: {}".format(layer+1))
 		time1 = time.time()
-		new_W, new_hx = mda_z(xx,Z,noise,lambda_)
+		new_W, new_hx = mda_z(prevhx,Z,noise,lambda_)
 		time2 = time.time()-time1
 		print("Run in time: {}".format(time2))
 		Ws.append(new_W)

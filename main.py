@@ -1,10 +1,12 @@
 import sam_lib as slib
 import numpy as np
+from sklearn.svm import SVC
 print("loading yy...")
 yy = np.load("vectors/yy_np.npy")
 print("loading xx...")
 
 xx0 = np.load("vectors/xx_0.npy").transpose()
+print(xx0.shape)
 xx1 = np.load("vectors/xx_1.npy").transpose()
 xx2 = np.load("vectors/xx_2.npy").transpose()
 xx3 = np.load("vectors/xx_3.npy").transpose()
@@ -16,13 +18,24 @@ yy = np.concatenate((yy0, yy1, yy2, yy3, yy4), axis = 1)
 # yy0,yy1,yy2,yy3,yy4 = yy[0,:], 
 print("done loading")
 
+
+
 # print(xx.shape)
 # print(xx0.shape)
 # print(yy.shape)
 # print(yy0.shape)
 
+print("Data input shape {}".format(xx0.shape))
 Z = slib.cal_Z(xx0, 1)
-Ws = slib.msda_z(xx0,Z,0.6,4,1)
+print("Finish")
+Ws = slib.msda_z(xx0,Z,0.6,4)
 
-print(Z.shape)
-print(Ws.shape)
+x_clf = xx0.transpose()
+clf = SVC(gamma='auto')
+clf.fit(x_clf, yy0)
+W = W[-1]
+x_test_clf = (W.dot(xx1)).transpose()
+y_test_clf = yy1
+score = clf.score(x_test_clf, y_test_clf)
+print("Score train on X0, test on X1: {}".format(score))
+
