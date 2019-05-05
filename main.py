@@ -35,8 +35,8 @@ clf = SVC(gamma='auto')
 yy = yy.reshape(yy.shape[1],)
 clf.fit(x_clf, yy)
 
-biases = np.ones((8000, 1320))
-print(xx.shape)
+biases = np.ones((1, 330))
+print(xx4.shape)
 print(biases.shape)
 xx4 = np.concatenate((xx4,biases), axis=0)
 xx4 = Ws[-1]*xx4
