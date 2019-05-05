@@ -83,7 +83,7 @@ def msda_z(xx, Z, noise, layers):
 		print("Run in time: {}".format(time2))
 		Ws.append(new_W)
 		prevhx = new_hx
-	return Ws
+	return Ws, new_hx
 	pass
 
 
