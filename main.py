@@ -28,7 +28,7 @@ print("done loading")
 print("Data input shape {}".format(xx0.shape))
 Z = slib.cal_Z(xx0, 1)
 print("Finish")
-Ws = slib.msda_z(xx0,Z,0.6,4)
+Ws = slib.msda_z(xx0,Z,0.6,1)
 
 x_clf = xx0.transpose()
 clf = SVC(gamma='auto')
