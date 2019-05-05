@@ -57,7 +57,8 @@ def mda_z(xx, Z, noise, _lambda):
 	# print("reg shape {}".format(reg.shape))
 	reg[d,d] = 0
 	#W dx(d+1)
-	W = P.dot((Q+reg).transpose())
+	inver_mat = np.linalg.inv(Q+reg)
+	W = P.dot(inver_mat)
 	# print("W shape {}".format(W.shape))
 	hx = W.dot(xxb)
 	hx = np.tanh(hx)
