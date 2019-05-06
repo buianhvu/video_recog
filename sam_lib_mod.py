@@ -80,8 +80,8 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	S = xxb.dot(xxb.transpose())
 	Sz = xxz.dot(xxz.transpose())
 	print("SZ shape {}".format(Sz.shape))
-	print Sz
-	print Sz[0:d,:]
+	# print Sz
+	# print Sz[0:d,:]
 	#corruption vector
 	q = np.ones((d+1,1))*(1-noise)
 	q[-1] = 1
@@ -109,10 +109,13 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 		print('view: {}'.format(view))
 		print('check point 2:')
 		SG[view] = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
+		print('check point 2.0')
 		QG[view] = np.multiply(SG[view], q.dot(q.transpose())) #shape d+1 x d+1
+		print('check point 2.1')
 		np.fill_diagonal(QG[view], np.multiply(q,np.diag(SG[view]))) #d+1 x d+1
+		print('check point 2.2')
 		PG[view] = np.multiply(SG[view][0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
-		print('check point 2.1:')
+		print('check point 2.2.2:')
 	print('check point 3:')
 	id_mat = np.identity(d)
 	print("Shape id_mat {}".format(type(id_mat)))
