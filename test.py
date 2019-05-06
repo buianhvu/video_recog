@@ -44,13 +44,14 @@ Z = slib.cal_Z(xx,V)
 # from sklearn.svm import SVC
 print("msda_z starts ....")
 
-W, G, hw, hg = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V)
+W, G = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V)
 # print("hw type: {}".format(hw))
 
 #starting get accuracy
 print("Initializing classifier: ")
 clf = SVC(gamma='auto')
-x_train = hw.transpose()
+xx = concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
+x_train = (W.dot(xx)).transpose()
 y_train = yy.reshape(yy.shape[1],)
 
 clf.fit(x_train, y_train)
