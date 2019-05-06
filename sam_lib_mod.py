@@ -97,8 +97,8 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	# print("reg shape {}".format(reg.shape))
 	reg[d,d] = 0
 	#W dx(d+1)
-	inver_mat = np.linalg.inv(Q+reg)
-	M = P.dot(inver_mat)
+	del Q; del S; del xxz; del xxb; del Z 
+	M = P.dot(np.linalg.inv(Q+reg))
 
 	#some pre-data for computing Gv:
 	# SG = [v for v in range(V)]
