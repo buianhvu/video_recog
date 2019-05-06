@@ -46,7 +46,7 @@ print("msda_z starts ....")
 
 W, G = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V)
 # print("hw type: {}".format(hw))
-
+del Z
 #starting get accuracy
 print("Initializing classifier: ")
 clf = SVC(gamma='auto')
