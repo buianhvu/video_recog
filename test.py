@@ -49,9 +49,12 @@ del Z
 #starting get accuracy
 print("Initializing classifier: ")
 clf = SVC(gamma='auto')
-xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
-x_train = (W.dot(xx)).transpose()
-y_train = yy.reshape(yy.shape[1],)
+#multi-to-one if x2 is choose for test, then it is excluded from the training
+x_train = np.concatenate((xx0,xx1,xx3,xx4), axis = 1)
+y_train = np.concatenate((yy0,yy1,yy3,yy4), axis = 1)
+# xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
+x_train = (W.dot(x_train)).transpose()
+y_train = y_train.reshape(y_train.shape[1],)
 
 clf.fit(x_train, y_train)
 
