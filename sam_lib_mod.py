@@ -128,14 +128,18 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 		inve_W_to_G = np.linalg.inv(W_to_G) #dxd
 		#after updating W, then update Gv:
 		for view in range(V):
-			SG = GG[view].dot(GG[view].transpose())
+			print("Updating G{}".format(view))
+			SG = GG[view].dot(GG[view].transpose())			
 			QG = np.multiply(SG, q.dot(q.transpose())) #shape d+1 x d+1
 			PG = np.multiply(SG[0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
-
-			temp1 = np.linalg.inv(alpha*QG+reg)
-			temp = (alpha*PG).dot(temp1) #dx(d+1)
+			temp = (alpha*PG).dot(np.linalg.inv(alpha*QG+reg)) #dx(d+1)
+			del SG
+			del QG
+			del PG
 			#update G[view]
 			G[view] = inve_W_to_G.dot(temp) #dx(d+1)
+			print("End updating G{}".format(view))
+
 	print("Converging done")
 	# print("W shape {}".format(W.shape))
 	hw = W.dot(xxb)
