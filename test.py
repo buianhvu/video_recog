@@ -43,14 +43,13 @@ Z = slib.cal_Z(xx,V)
 #msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
 # from sklearn.svm import SVC
 print("msda_z starts ....")
-
 W, G = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V)
 # print("hw type: {}".format(hw))
 del Z
 #starting get accuracy
 print("Initializing classifier: ")
 clf = SVC(gamma='auto')
-xx = concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
+xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
 x_train = (W.dot(xx)).transpose()
 y_train = yy.reshape(yy.shape[1],)
 
@@ -66,9 +65,9 @@ y_test = yy2.reshape(yy2.shape[1],)
 score = clf.score(x_test, y_test)
 print("calculating score ...")
 print("Score train on , test on X2: {}".format(score))
-
 np.save("W_np",W)
 np.sve("G_np", G)
+
 
 
 # # # yy0,yy1,yy2,yy3,yy4 = yy[0,:], 
