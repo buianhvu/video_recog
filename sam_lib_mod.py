@@ -104,12 +104,14 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	SG = [v for v in range(V)]
 	QG = [v for v in range(V)]
 	PG = [v for v in range(V)]
+	print('checkpoint 1: ')
 	for view in range(V):
+		print('check point 2:')
 		SG[view] = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
 		QG[view] = np.multiply(SG[view], q.dot(q.transpose())) #shape d+1 x d+1
 		np.fill_diagonal(QG[view], np.multiply(q,np.diag(SG[view]))) #d+1 x d+1
 		PG[view] = np.multiply(SG[view][0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
-
+	print('check point 3:')
 	id_mat = np.identity(d)
 	print("Shape id_mat {}".format(type(id_mat)))
 	#tills converges
