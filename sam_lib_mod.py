@@ -3,9 +3,21 @@ import math
 import scipy.linalg
 import time
 
+def init_G(views, d):
+	#each Gv has shaped dx(d+1) with bias:
+	G = []
+	for view in range(views):
+		Gv = np.random.rand(d, d+1)
+		G.append(Gv)
+	return G
+
 
 #Z VnxVn
 def cal_Z(xx,V):
+	#x has shape [x1,x2,x3,...] it is good for cal G
+	
+	# print("in cal_Z xx shape {}".format(xx.shape))
+
 	#n != N
 	#V domian size
 	d, N = xx.shape
@@ -28,21 +40,39 @@ def cal_Z(xx,V):
 	print(Z.shape)
 	return Z
 	pass
+
+
+
 def compute_gg_inve(G, beta, _lambda):
-	d = G[0].shape[0]
-	reg = _lambda*np.identity(d)
-	x = np.zeros((G[0].shape))
+	dim = G[0].shape[0] #dim = d
+	print("dim gv = {}".format(dim))
+	reg = _lambda*np.identity(dim)
+	x = np.zeros((dim,dim))
 	for g in G:
+		# print("X {} g {} reg: {}".format(x.shape, g.dot(g.transpose()).shape, reg.shape))
 		x = x + g.dot(g.transpose())*beta + reg
-	
-	return x
-def mda_z(xx, Z, noise, _lambda, G, V, alpha, beta):
+	x_inve = np.linalg.inv(x)
+	return x # x has shape dxd
+
+def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
+	#xx is [xx1, xx2, xx3, xx4]
 	#V views => there are V elements in G
+	list_ = []
+	GG = [] #each element of GG is vth-x views
+	for x_v in gg:
+		print("x_v shapeee {}".format(x_v.shape))
+		bias = np.ones((1, x_v.shape[1]))
+		x_v_bias = np.concatenate((x_v, bias),axis = 0)
+		GG.append(x_v_bias)
 
+	d, N = xx.shape
+	# print("in mda_z xx shape {}".format(xx.shape))
+	# print ("aaaaaaaaaaaaa")
+	n = N/V
+	G = init_G(V, d)
 
-	d, n = xx.shape
 	#adding bias
-	b_mt = np.ones((1,n))
+	b_mt = np.ones((1,N))
 	xxb = np.concatenate((xx,b_mt), axis = 0)
 	xxz = xx.dot(Z)
 	#adding bias to xxz
@@ -59,29 +89,58 @@ def mda_z(xx, Z, noise, _lambda, G, V, alpha, beta):
 	Q = np.multiply(S, q.dot(q.transpose()))
 	np.fill_diagonal(Q,np.multiply(q,np.diag(S)))
 	#P dx(d+1) P = Sz(1:end-1,:).*repmat(q', d, 1);
-	print("Sz[0:d,:] shape {}".format(Sz[0:d,:].shape))
-	print(" np.tile(q.transpose(), (d, 1)) shape {}".format( np.tile(q.transpose(), (d, 1)).shape))
+	# print("Sz[0:d,:] shape {}".format(Sz[0:d,:].shape))
+	# print(" np.tile(q.transpose(), (d, 1)) shape {}".format( np.tile(q.transpose(), (d, 1)).shape))
 	P = np.multiply(Sz[0:d,:], np.tile(q.transpose(), (d, 1)))
 	#final W = P*Q^-1, dx(d+1)
-	reg = _lambda*np.identity(d+1)
+	reg = lambda_*np.identity(d+1)
 	# print("reg shape {}".format(reg.shape))
 	reg[d,d] = 0
-
 	#W dx(d+1)
-	W = P.dot((Q+reg).transpose())
+	inver_mat = np.linalg.inv(Q+reg)
+	M = P.dot(inver_mat)
+
+	#some pre-data for computing Gv:
+	SG = [v for v in range(V)]
+	QG = [v for v in range(V)]
+	PG = [v for v in range(V)]
+	for view in range(V):
+		SG[view] = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
+		QG[view] = np.multiply(SG[view], q.dot(q.transpose())) #shape d+1 x d+1
+		np.fill_diagonal(QG[view], np.multiply(q,np.diag(SG[view]))) #d+1 x d+1
+		PG[view] = np.multiply(SG[view][0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
+
+	id_mat = np.identity(d)
+	print("Shape id_mat {}".format(type(id_mat)))
+	#tills converges
+	print("Converging")
+	for converge in range(5):
+		W = compute_gg_inve(G, beta, lambda_).dot(M) #update W
+		print("W type {} Wshape {}".format(type(W), W.shape))
+		W_to_G = beta*W.dot(W.transpose())+lambda_*id_mat
+		inve_W_to_G = np.linalg.inv(W_to_G) #dxd
+		#after updating W, then update Gv:
+		for view in range(V):
+			temp1 = np.linalg.inv(alpha*QG[view]+reg)
+			temp = (alpha*PG[view]).dot(temp1) #dx(d+1)
+			#update G[view]
+			G[view] = inve_W_to_G.dot(temp) #dx(d+1)
+	print("Converging done")
 	# print("W shape {}".format(W.shape))
-	hx = W.dot(xxb)
-	hx = np.tanh(hx)
-	while(not converge):
-		W = 
+	hw = W.dot(xxb)
+	hw = np.tanh(hw)
 
+	hg = [n for n in range(V)]
+	for view in range(V):
+		hg_ = G[view].dot(GG[view])
+		hg[view] = np.tanh(hg_)
 
-
-
-	return W, hx
+	return hw, hg, W, G
 	pass
-def msda_z(xx, Z, noise, layers):
-	lambda_ = 0.00001
+
+
+
+def msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
 	#xx : dxn input
 	#noise: corruption level
 	#layers: number of layers to stack
@@ -89,19 +148,25 @@ def msda_z(xx, Z, noise, layers):
 	print("**************STACKING HIDDEN LAYERS")
 	print("Input Shape: {}".format(xx.shape))
 	print("Noise: {}, Layers: {}, Lambda: {}".format(noise, layers, lambda_))
-	prevhx = xx
-	allhx = []
+	prevhw = xx
+	prevhg = gg
+	allw = []
+	allg = []
 	Ws = []
+	Gs = []
 	for layer in range(layers):
 		print("**Layer number: {}".format(layer+1))
 		time1 = time.time()
-		new_W, new_hx = mda_z(prevhx,Z,noise,lambda_)
+		new_hw, new_hg, new_W, new_G = mda_z(prevhw,prevhg,Z,noise,lambda_, alpha,beta,V)
 		time2 = time.time()-time1
 		print("Run in time: {}".format(time2))
 		Ws.append(new_W)
-		prevhx = new_hx
-	return Ws, new_hx
+		Gs.append(new_G)
+		prevhw = new_hw
+		prevhg = new_hg
+	return Ws, Gs, new_hw, new_hg
 	pass
+
 
 
 # mda_z(fake_xx, fake_z, 0.8, 1)
