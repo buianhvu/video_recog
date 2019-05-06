@@ -104,7 +104,6 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	# SG = [v for v in range(V)]
 	# QG = [v for v in range(V)]
 	# PG = [v for v in range(V)]
-	print('checkpoint 1: ')
 	# for view in range(V):
 	# 	print('view: {}'.format(view))
 	# 	print('check point 2:')
@@ -116,7 +115,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	# 	print('check point 2.2')
 	# 	PG[view] = np.multiply(SG[view][0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
 	# 	print('check point 2.2.2:')
-	print('check point 3:')
+	print('check point 0:')
 	id_mat = np.identity(d)
 	print("Shape id_mat {}".format(type(id_mat)))
 	#tills converges
@@ -129,9 +128,12 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 		#after updating W, then update Gv:
 		for view in range(V):
 			print("Updating G{}".format(view))
-			SG = GG[view].dot(GG[view].transpose())			
+			SG = GG[view].dot(GG[view].transpose())		
+			print("check point 1")
 			QG = np.multiply(SG, q.dot(q.transpose())) #shape d+1 x d+1
+			print("check point 2")
 			PG = np.multiply(SG[0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
+			print("check point 3")
 			temp = (alpha*PG).dot(np.linalg.inv(alpha*QG+reg)) #dx(d+1)
 			del SG
 			del QG
