@@ -11,7 +11,7 @@ xx2 = np.load("vectors/xx_2.npy").transpose()
 xx3 = np.load("vectors/xx_3.npy").transpose()
 xx4 = np.load("vectors/xx_4.npy").transpose()
 
-n = 110 #test on smaller set for speeding up
+n = 55 #test on smaller set for speeding up
 xx0 = xx0[:,:n] #dxn
 xx1 = xx1[:,:n]
 xx2 = xx2[:,:n]
