@@ -171,7 +171,7 @@ def msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
 		Gs.append(new_G)
 		prevhw = new_hw
 		prevhg = new_hg
-	return Ws, Gs, new_hw, new_hg
+	return new_W, new_G, new_hw, new_hg
 	pass
 
 
