@@ -106,6 +106,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	PG = [v for v in range(V)]
 	print('checkpoint 1: ')
 	for view in range(V):
+		print('view: {}'.format(view))
 		print('check point 2:')
 		SG[view] = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
 		QG[view] = np.multiply(SG[view], q.dot(q.transpose())) #shape d+1 x d+1
