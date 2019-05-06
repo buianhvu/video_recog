@@ -121,7 +121,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	print("Shape id_mat {}".format(type(id_mat)))
 	#tills converges
 	print("Converging")
-	for converge in range(4):
+	for converge in range(2):
 		print("Converge : {}".format(converge))
 		W = compute_gg_inve(G, beta, lambda_).dot(M) #update W
 		print("W type {} Wshape {}".format(type(W), W.shape))
