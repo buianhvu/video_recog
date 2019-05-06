@@ -34,7 +34,6 @@ Z = slib.cal_Z(xx,1)
 from sklearn.svm import SVC
 print("msda_z ....")
 
-	return Ws, Gs, new_hw, new_hg
 
 W, G, hw, hg = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, 1)
 print("hw type: {}".format(hw))
