@@ -1,9 +1,9 @@
 import sam_lib_mod as slib
 import numpy as np
 from sklearn.svm import SVC
-# print("loading yy...")
-# yy = np.load("vectors/yy_np.npy")
-# print("loading xx...")
+print("loading yy...")
+yy = np.load("vectors/yy_np.npy")
+print("loading xx...")
 
 xx0 = np.load("vectors/xx_0.npy").transpose()
 print(xx0.shape)
