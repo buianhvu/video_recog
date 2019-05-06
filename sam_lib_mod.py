@@ -138,6 +138,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 			del SG
 			del QG
 			del PG
+			print("check point 4")
 			#update G[view]
 			G[view] = inve_W_to_G.dot(temp) #dx(d+1)
 			print("End updating G{}".format(view))
