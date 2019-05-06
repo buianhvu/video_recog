@@ -6,56 +6,67 @@ yy = np.load("vectors/yy_np.npy")
 print("loading xx...")
 
 xx0 = np.load("vectors/xx_0.npy").transpose()
-print(xx0.shape)
 xx1 = np.load("vectors/xx_1.npy").transpose()
 xx2 = np.load("vectors/xx_2.npy").transpose()
 xx3 = np.load("vectors/xx_3.npy").transpose()
 xx4 = np.load("vectors/xx_4.npy").transpose()
 
-xx = np.concatenate((xx0,xx1,xx2,xx3),axis = 1) #xx dxn
-yy0,yy1,yy2,yy3,yy4 = yy[0,:], yy[1,:], yy[2,:], yy[3,:], yy[4,:]
-yy = np.concatenate((yy0, yy1, yy2, yy3), axis = 1)
+n = 110 #test on smaller set for speeding up
+xx0 = xx0[:,:n] #dxn
+xx1 = xx1[:,:n]
+xx2 = xx2[:,:n]
+xx3 = xx3[:,:n]
+xx4 = xx4[:,:n]
 
-# xx1 = np.random.rand(3,5)
-# xx2 = np.random.rand(3,5)
-# xx3 = np.random.rand(3,5)
-# xx4 = np.random.rand(3,5)
-gg = [xx0,xx1,xx2,xx3]
+#concatenate
+xx = np.concatenate((xx0,xx1,xx2,xx3),axis = 1) #xx dxN
+print("xx1 shape: {}".format(xx1.shape))
+print("xx shape: {}".format(xx.shape))
+
+yy0,yy1,yy2,yy3,yy4 = yy[0,:], yy[1,:], yy[2,:], yy[3,:], yy[4,:] #1xn
+#test on smaller set for speeding up
+yy0 = yy0[:,:n] #1xn
+yy1 = yy1[:,:n]
+yy2 = yy2[:,:n]
+yy3 = yy3[:,:n]
+yy4 = yy4[:,:n]
+
+print("yy0 shape {}".format(yy0.shape))
+yy = np.concatenate((yy0, yy1, yy2, yy3, yy4), axis = 1) #1xN
+print("yy shape: {}".format(yy.shape))
+gg = [xx0,xx1,xx2,xx3,xx4]
 gg = np.array(gg)
+V = 5
+print("gg shape: {}".format(gg.shape))
 
-
-
-xx = xx1
-print("xx shape: {}".format(xx1.shape))
-
-
-Z = slib.cal_Z(xx,1)
+Z = slib.cal_Z(xx,V)
 #msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
-from sklearn.svm import SVC
-print("msda_z ....")
+# from sklearn.svm import SVC
+print("msda_z starts ....")
 
+W, G, hw, hg = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, 5)
+# print("hw type: {}".format(hw))
 
-W, G, hw, hg = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, 1)
-print("hw type: {}".format(hw))
+#starting get accuracy
 print("Initializing classifier: ")
-x_clf = hw.transpose()
 clf = SVC(gamma='auto')
-yy = yy1.reshape(yy1.shape[1],)
-clf.fit(x_clf, yy)
+x_train = hw.transpose()
+y_train = yy.reshape(yy.shape[1],)
+clf.fit(x_train, y_train)
 
-biases = np.ones((1, 330))
-print(xx2.shape)
-print(biases.shape)
-xx2 = np.concatenate((xx2,biases), axis=0)
-xx2 = W.dot(xx2)
-x_test_clf = xx2.transpose()
-y_test_clf = yy2.reshape(yy2.shape[1],)
-score = clf.score(x_test_clf, y_test_clf)
+biases = np.ones((1, n))
+#supposed tested on xx2
+x_test = np.concatenate((xx2,biases), axis=0) #(d+1)xn
+x_test = W.dot(x_test) #(d+1, n)
+x_test = x_test.transpose() #feed to svm
+y_test = yy2.reshape(yy2.shape[1],)
+
+score = clf.score(x_test, y_test)
 print("calculating score ...")
 print("Score train on , test on X2: {}".format(score))
 
 
 
-# # yy0,yy1,yy2,yy3,yy4 = yy[0,:], 
+# # # yy0,yy1,yy2,yy3,yy4 = yy[0,:], 
 # print("done loading")
 
