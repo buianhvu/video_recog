@@ -40,7 +40,7 @@ print("hw type: {}".format(hw))
 print("Initializing classifier: ")
 x_clf = hw.transpose()
 clf = SVC(gamma='auto')
-yy = yy.reshape(yy.shape[1],)
+yy = yy.reshape(yy1.shape[1],)
 clf.fit(x_clf, yy)
 
 biases = np.ones((1, 330))
