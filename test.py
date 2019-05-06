@@ -19,7 +19,7 @@ xx3 = xx3[:,:n]
 xx4 = xx4[:,:n]
 
 #concatenate
-xx = np.concatenate((xx0,xx1,xx2,xx3),axis = 1) #xx dxN
+xx = np.concatenate((xx0,xx1,xx2,xx3,x4),axis = 1) #xx dxN
 print("xx1 shape: {}".format(xx1.shape))
 print("xx shape: {}".format(xx.shape))
 
