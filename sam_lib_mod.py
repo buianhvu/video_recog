@@ -101,21 +101,21 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	M = P.dot(inver_mat)
 
 	#some pre-data for computing Gv:
-	SG = [v for v in range(V)]
-	QG = [v for v in range(V)]
-	PG = [v for v in range(V)]
+	# SG = [v for v in range(V)]
+	# QG = [v for v in range(V)]
+	# PG = [v for v in range(V)]
 	print('checkpoint 1: ')
-	for view in range(V):
-		print('view: {}'.format(view))
-		print('check point 2:')
-		SG[view] = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
-		print('check point 2.0')
-		QG[view] = np.multiply(SG[view], q.dot(q.transpose())) #shape d+1 x d+1
-		print('check point 2.1')
-		np.fill_diagonal(QG[view], np.multiply(q,np.diag(SG[view]))) #d+1 x d+1
-		print('check point 2.2')
-		PG[view] = np.multiply(SG[view][0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
-		print('check point 2.2.2:')
+	# for view in range(V):
+	# 	print('view: {}'.format(view))
+	# 	print('check point 2:')
+	# 	SG[view] = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
+	# 	print('check point 2.0')
+	# 	QG[view] = np.multiply(SG[view], q.dot(q.transpose())) #shape d+1 x d+1
+	# 	print('check point 2.1')
+	# 	np.fill_diagonal(QG[view], np.multiply(q,np.diag(SG[view]))) #d+1 x d+1
+	# 	print('check point 2.2')
+	# 	PG[view] = np.multiply(SG[view][0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
+	# 	print('check point 2.2.2:')
 	print('check point 3:')
 	id_mat = np.identity(d)
 	print("Shape id_mat {}".format(type(id_mat)))
@@ -128,8 +128,12 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 		inve_W_to_G = np.linalg.inv(W_to_G) #dxd
 		#after updating W, then update Gv:
 		for view in range(V):
-			temp1 = np.linalg.inv(alpha*QG[view]+reg)
-			temp = (alpha*PG[view]).dot(temp1) #dx(d+1)
+			SG = GG[view].dot(GG[view].transpose())
+			QG = np.multiply(SG, q.dot(q.transpose())) #shape d+1 x d+1
+			PG = np.multiply(SG[0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
+
+			temp1 = np.linalg.inv(alpha*QG+reg)
+			temp = (alpha*PG).dot(temp1) #dx(d+1)
 			#update G[view]
 			G[view] = inve_W_to_G.dot(temp) #dx(d+1)
 	print("Converging done")
