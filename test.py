@@ -11,7 +11,7 @@ xx2 = np.load("vectors/xx_2.npy").transpose()
 xx3 = np.load("vectors/xx_3.npy").transpose()
 xx4 = np.load("vectors/xx_4.npy").transpose()
 
-n = 5 #test on smaller set for speeding up
+n = 330 #test on smaller set for speeding up
 xx0 = xx0[:,:n] #dxn
 xx1 = xx1[:,:n]
 xx2 = xx2[:,:n]
@@ -44,7 +44,7 @@ Z = slib.cal_Z(xx,V)
 # from sklearn.svm import SVC
 print("msda_z starts ....")
 
-W, G, hw, hg = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, 5)
+W, G, hw, hg = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V)
 # print("hw type: {}".format(hw))
 
 #starting get accuracy
@@ -52,6 +52,7 @@ print("Initializing classifier: ")
 clf = SVC(gamma='auto')
 x_train = hw.transpose()
 y_train = yy.reshape(yy.shape[1],)
+
 clf.fit(x_train, y_train)
 
 biases = np.ones((1, n))

@@ -37,7 +37,7 @@ def cal_Z(xx,V):
 	for i in range(n):
 		if i != 0:
 			Z = scipy.linalg.block_diag(Z, K[:,:,i])
-	print(Z.shape)
+	print("Finish calculating Z {}".format(Z.shape))
 	return Z
 	pass
 
@@ -97,7 +97,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	# print("reg shape {}".format(reg.shape))
 	reg[d,d] = 0
 	#W dx(d+1)
-	del S; del xxz; del xxb; del Z 
+	del S; del xxz; del Z 
 	M = P.dot(np.linalg.inv(Q+reg))
 	del Q;
 
