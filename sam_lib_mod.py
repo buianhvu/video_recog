@@ -134,8 +134,9 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 			print("check point 2")
 			PG = np.multiply(SG[0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
 			print("check point 3")
-			temp = (alpha*PG).dot(np.linalg.inv(alpha*QG+reg)) #dx(d+1)
 			del SG
+			temp = (alpha*PG).dot(np.linalg.inv(alpha*QG+reg)) #dx(d+1)
+			print("check point 3.1")
 			del QG
 			del PG
 			print("check point 4")
