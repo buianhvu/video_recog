@@ -97,9 +97,9 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	# print("reg shape {}".format(reg.shape))
 	reg[d,d] = 0
 	#W dx(d+1)
-	del S; del xxz; del Z 
+	del S; del xxz; del Z;
 	M = P.dot(np.linalg.inv(Q+reg))
-	del Q;
+	del Q; del P;
 
 	#some pre-data for computing Gv:
 	# SG = [v for v in range(V)]
@@ -122,6 +122,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	#tills converges
 	print("Converging")
 	for converge in range(4):
+		print("Converge : {}".format(converge))
 		W = compute_gg_inve(G, beta, lambda_).dot(M) #update W
 		print("W type {} Wshape {}".format(type(W), W.shape))
 		W_to_G = beta*W.dot(W.transpose())+lambda_*id_mat
