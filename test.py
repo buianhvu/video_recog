@@ -29,7 +29,10 @@ gg = np.array(gg)
 
 Z = slib.cal_Z(xx,4)
 #msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
+from sklearn.svm import SVC
+print("msda_z ....")
 hw, hg, W, G = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, 4)
+print("Initializing classifier: ")
 x_clf = hw.transpose()
 clf = SVC(gamma='auto')
 yy = yy.reshape(yy.shape[1],)
