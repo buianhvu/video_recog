@@ -111,12 +111,13 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 		QG[view] = np.multiply(SG[view], q.dot(q.transpose())) #shape d+1 x d+1
 		np.fill_diagonal(QG[view], np.multiply(q,np.diag(SG[view]))) #d+1 x d+1
 		PG[view] = np.multiply(SG[view][0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
+		print('check point 2.1:')
 	print('check point 3:')
 	id_mat = np.identity(d)
 	print("Shape id_mat {}".format(type(id_mat)))
 	#tills converges
 	print("Converging")
-	for converge in range(2):
+	for converge in range(4):
 		W = compute_gg_inve(G, beta, lambda_).dot(M) #update W
 		print("W type {} Wshape {}".format(type(W), W.shape))
 		W_to_G = beta*W.dot(W.transpose())+lambda_*id_mat
