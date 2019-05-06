@@ -66,6 +66,8 @@ score = clf.score(x_test, y_test)
 print("calculating score ...")
 print("Score train on , test on X2: {}".format(score))
 
+np.save("W_np",W)
+np.sve("G_np", G)
 
 
 # # # yy0,yy1,yy2,yy3,yy4 = yy[0,:], 
