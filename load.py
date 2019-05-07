@@ -12,8 +12,11 @@ def load_data(dir, list_file_names):
 	x = [[] for n in range(5)]
 	for filename in list_file_names:
 		f = h5py.File(dir+filename)
+		print(f.keys)
 		print ("Reading...: {}".format(filename))
+		print("length file: {}".format(len(f["llc_iDTs"])))
 		for element in f["llc_iDTs"]:
+			# print("element shape: {}".format(element.shape))
 			x[i].append(element)
 		xx_i = np.array(x[i])
 		np.save("xx_{}".format(i), xx_i)
