@@ -68,9 +68,12 @@ print("Y_TRAIN SHAPE: {}".format(y_train.shape))
 # xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
 yy_train_arr = []
 for y in y_train:
-	yy_train_arr.append(str(y))
+	int_y = int(y)
+	char_y = chr(int_y)
+	yy_train_arr.append(char_y)
 # xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
 
+print ("Y train arr: {}".format(yy_train_arr))
 clf.fit(x_train, yy_train_arr)
 
 biases = np.ones((1, n))
@@ -83,9 +86,11 @@ y_test = yy2.reshape(yy2.shape[1],)
 print("y_test type {}".format(type(y_test[1])))
 yy_test_arr = []
 for yt in y_test:
-	yy_test_arr.append(str(yt))
+	int_yt = int(y)
+	char_yt = chr(int_yt)
+	yy_test_arr.append(char_yt)
 
-
+print("Y test arr: {}".format(yy_test_arr))
 score = clf.score(x_test, y_test)
 print("calculating score ...")
 print("Score train on , test on X2: {}".format(score))
