@@ -59,6 +59,7 @@ clf = SVC(gamma='auto')
 bias_train = np.ones((1,n))
 x_train = np.concatenate((xx1,bias_train), axis = 0)
 x_train = (W.dot(x_train)).transpose()
+x_train = np.tanh(x_train)
 y_train = yy1.reshape(yy1.shape[1],)
 yy_train_arr = []
 
@@ -75,6 +76,7 @@ biases = np.ones((1, n))
 #supposed tested on xx2
 x_test = np.concatenate((xx2,biases), axis=0) #(d+1)xn
 x_test = W.dot(x_test) #(d+1, n)
+x_test = np.tanh(x_test)
 x_test = x_test.transpose() #feed to svm
 y_test = yy2.reshape(yy2.shape[1],)
 yy_test_arr = []
