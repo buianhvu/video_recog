@@ -1,6 +1,7 @@
 import sam_lib as slib
 import numpy as np
 from sklearn.svm import SVC
+from sklearn.neighbors.nearest_centroid import NearestCentroid
 print("loading yy...")
 yy = np.load("vectors/yy_np.npy")
 print("loading xx...")
@@ -61,7 +62,8 @@ print("Finish msda_Z")
 del Z
 #starting get accuracy
 print("Initializing classifier: ")
-clf = SVC(gamma='auto')
+# clf = SVC(gamma='auto')
+clf = NearestCentroid()
 #multi-to-one if x2 is choose for test, then it is excluded from the training
 bias_train = np.ones((1,n))
 x_train = np.concatenate((xx1,bias_train), axis = 0)
@@ -93,6 +95,8 @@ for yt in y_test:
 	int_yt = int(yt)
 	yy_test_arr.append(int_yt)
 
+predict = clf.Predict(x_test)
+print("Predict: {}".format(predict))
 print("Y test arr: {}".format(yy_test_arr))
 score = clf.score(x_test, yy_test_arr)
 print("calculating score ...")
