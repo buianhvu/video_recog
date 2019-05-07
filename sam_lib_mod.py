@@ -180,7 +180,7 @@ def msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V, Converge):
 	for layer in range(layers):
 		print("**Layer number: {}".format(layer+1))
 		time1 = time.time()
-		new_hw, new_hg, new_W, new_G = mda_z(prevhw,prevhg,Z,noise,lambda_, alpha,beta,V)
+		new_hw, new_hg, new_W, new_G = mda_z(prevhw,prevhg,Z,noise,lambda_, alpha,beta,V, Converge)
 		time2 = time.time()-time1
 		print("Run in time: {}".format(time2))
 		Ws.append(new_W)
