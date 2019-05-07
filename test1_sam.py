@@ -66,8 +66,12 @@ print("X_TRAIN SHAPE: {}".format(x_train.shape))
 y_train = yy1.reshape(yy1.shape[1],)
 print("Y_TRAIN SHAPE: {}".format(y_train.shape))
 # xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
+yy_train_arr = []
+for y in y_train:
+	yy_train_arr.append(str(y))
+# xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
 
-clf.fit(x_train, y_train)
+clf.fit(x_train, yy_train_arr)
 
 biases = np.ones((1, n))
 #supposed tested on xx2
@@ -77,6 +81,10 @@ x_test = x_test.transpose() #feed to svm
 
 y_test = yy2.reshape(yy2.shape[1],)
 print("y_test type {}".format(type(y_test[1])))
+yy_test_arr = []
+for yt in y_test:
+	yy_test_arr.append(str(yt))
+
 
 score = clf.score(x_test, y_test)
 print("calculating score ...")
