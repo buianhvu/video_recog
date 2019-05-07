@@ -45,11 +45,12 @@ Z = slib.cal_Z(xx,V)
 
 print("msda_z starts ....")
 Ws, Gs = slib.msda_z(xx, Z, 0.1, 1)
+W = Ws[-1]
+
 np.save("W_np",W)
-np.save("G_np", G)
+# np.save("G_np", G)
 
 print("Finish msda_Z")
-W = Ws[-1]
 
 #print("TESTING")
 # print("hw type: {}".format(hw))
