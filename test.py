@@ -43,7 +43,7 @@ Z = slib.cal_Z(xx,V)
 #msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
 # from sklearn.svm import SVC
 print("msda_z starts ....")
-W, G = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V)
+W, G = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V, 6)
 np.save("W_np",W)
 np.save("G_np", G)
 

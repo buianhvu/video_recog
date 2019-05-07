@@ -55,7 +55,7 @@ def compute_gg_inve(G, beta, _lambda):
 	x_inve = np.linalg.inv(x)
 	return x # x has shape dxd
 
-def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
+def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 	#xx is [xx1, xx2, xx3, xx4]
 	#V views => there are V elements in G
 	GG = [] #each element of GG is vth-x views
@@ -122,7 +122,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	print("Shape id_mat {}".format(type(id_mat)))
 	#tills converges
 	print("Converging")
-	for converge in range(5):
+	for converge in range(Converge):
 		print("Converge : {}".format(converge))
 		W = compute_gg_inve(G, beta, lambda_).dot(M) #update W
 		print("W type {} Wshape {}".format(type(W), W.shape))
@@ -163,7 +163,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 
 
 
-def msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
+def msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V, Converge):
 	#xx : dxn input
 	#noise: corruption level
 	#layers: number of layers to stack
