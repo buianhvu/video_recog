@@ -95,8 +95,8 @@ for yt in y_test:
 	int_yt = int(yt)
 	yy_test_arr.append(int_yt)
 
-predict = clf.Predict(x_test)
-print("Predict: {}".format(predict))
+predict = clf.predict(x_test)
+print("predict: {}".format(predict))
 print("Y test arr: {}".format(yy_test_arr))
 score = clf.score(x_test, yy_test_arr)
 print("calculating score ...")
