@@ -5,11 +5,11 @@ import time
 
 
 #Z VnxVn
-def cal_Z(xx,V):
+def cal_Z(xx):
 	#n != N
 	#V domian size
 	d, N = xx.shape
-	n = N/V
+	n = N/5
 	K = np.zeros((V,V,n))
 	for k in range(n):
 		for i in range(V):
