@@ -44,6 +44,12 @@ Z = slib.cal_Z(xx,V)
 # from sklearn.svm import SVC
 print("msda_z starts ....")
 W, G = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V)
+np.save("W_np",W)
+np.sve("G_np", G)
+
+
+
+#print("TESTING")
 # print("hw type: {}".format(hw))
 del Z
 #starting get accuracy
@@ -51,6 +57,7 @@ print("Initializing classifier: ")
 clf = SVC(gamma='auto')
 #multi-to-one if x2 is choose for test, then it is excluded from the training
 x_train = np.concatenate((xx0,xx1,xx3,xx4), axis = 1)
+x_train = np.concatenate((x_train, np.ones(1,x_train.shape[1])), axis = 0)
 y_train = np.concatenate((yy0,yy1,yy3,yy4), axis = 1)
 # xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
 x_train = (W.dot(x_train)).transpose()
@@ -68,8 +75,6 @@ y_test = yy2.reshape(yy2.shape[1],)
 score = clf.score(x_test, y_test)
 print("calculating score ...")
 print("Score train on , test on X2: {}".format(score))
-np.save("W_np",W)
-np.sve("G_np", G)
 
 
 
