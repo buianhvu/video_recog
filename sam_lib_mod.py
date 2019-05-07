@@ -30,7 +30,8 @@ def cal_Z(xx,V):
 				if i == j:
 					K[i, j, k] = 0
 				else:
-					K[i, j, k] = math.exp(-math.sqrt(np.sum(np.square(xx[:,k+n*i]-xx[:,k+n*j]))))/(2*2)
+					diff = xx[:,k+i*n]-xx[:,k+j*n]
+					K[i, j, k] = math.exp(math.sqrt(np.sum(np.square(diff))))/(2*2)
 			
 	# Z = np.zeros((V*n, V*n))
 	Z = K[:,:,0]
@@ -46,7 +47,7 @@ def cal_Z(xx,V):
 def compute_gg_inve(G, beta, _lambda):
 	dim = G[0].shape[0] #dim = d
 	print("dim gv = {}".format(dim))
-	reg = _lambda*np.identity(dim)
+	reg = np.identity(dim)
 	x = np.zeros((dim,dim))
 	for g in G:
 		# print("X {} g {} reg: {}".format(x.shape, g.dot(g.transpose()).shape, reg.shape))
@@ -57,13 +58,13 @@ def compute_gg_inve(G, beta, _lambda):
 def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	#xx is [xx1, xx2, xx3, xx4]
 	#V views => there are V elements in G
-	list_ = []
 	GG = [] #each element of GG is vth-x views
 	for x_v in gg:
-		print("x_v shapeee {}".format(x_v.shape))
+		# print("x_v shapeee {}".format(x_v.shape))
 		bias = np.ones((1, x_v.shape[1]))
 		x_v_bias = np.concatenate((x_v, bias),axis = 0)
 		GG.append(x_v_bias)
+	print("GG is added bias")
 
 	d, N = xx.shape
 	# print("in mda_z xx shape {}".format(xx.shape))
@@ -93,7 +94,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	# print(" np.tile(q.transpose(), (d, 1)) shape {}".format( np.tile(q.transpose(), (d, 1)).shape))
 	P = np.multiply(Sz[0:d,:], np.tile(q.transpose(), (d, 1)))
 	#final W = P*Q^-1, dx(d+1)
-	reg = lambda_*np.identity(d+1)
+	reg = np.identity(d+1)
 	# print("reg shape {}".format(reg.shape))
 	reg[d,d] = 0
 	#W dx(d+1)
@@ -121,11 +122,11 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V):
 	print("Shape id_mat {}".format(type(id_mat)))
 	#tills converges
 	print("Converging")
-	for converge in range(3):
+	for converge in range(5):
 		print("Converge : {}".format(converge))
 		W = compute_gg_inve(G, beta, lambda_).dot(M) #update W
 		print("W type {} Wshape {}".format(type(W), W.shape))
-		W_to_G = beta*W.dot(W.transpose())+lambda_*id_mat
+		W_to_G = beta*W.dot(W.transpose())+id_mat
 		inve_W_to_G = np.linalg.inv(W_to_G) #dxd
 		#after updating W, then update Gv:
 		for view in range(V):

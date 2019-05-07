@@ -56,12 +56,11 @@ del Z
 print("Initializing classifier: ")
 clf = SVC(gamma='auto')
 #multi-to-one if x2 is choose for test, then it is excluded from the training
-x_train = np.concatenate((xx0,xx1,xx3,xx4), axis = 1)
-x_train = np.concatenate((x_train, np.ones(1,x_train.shape[1])), axis = 0)
-y_train = np.concatenate((yy0,yy1,yy3,yy4), axis = 1)
-# xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
+bias_train = np.ones((1,n))
+x_train = np.concatenate((xx1,bias_train), axis = 0)
 x_train = (W.dot(x_train)).transpose()
-y_train = y_train.reshape(y_train.shape[1],)
+y_train = yy1.reshape(yy1.shape[1],)
+# xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
 
 clf.fit(x_train, y_train)
 
