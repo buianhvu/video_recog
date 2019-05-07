@@ -2,6 +2,7 @@ import sam_lib as slib
 import numpy as np
 from sklearn.svm import SVC
 from sklearn.neighbors.nearest_centroid import NearestCentroid
+from sklearn.neighbors import KNeighborsClassifier
 print("loading yy...")
 yy = np.load("vectors/yy_np.npy")
 print("loading xx...")
@@ -63,7 +64,7 @@ del Z
 #starting get accuracy
 print("Initializing classifier: ")
 # clf = SVC(gamma='auto')
-clf = NearestCentroid()
+clf = KNeighborsClassifier(n_neighbors=1)
 #multi-to-one if x2 is choose for test, then it is excluded from the training
 bias_train = np.ones((1,n))
 x_train = np.concatenate((xx1,bias_train), axis = 0)
