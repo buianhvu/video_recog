@@ -86,10 +86,11 @@ x_test = W.dot(x_test) #(d+1, n)
 x_test = x_test.transpose() #feed to svm
 
 y_test = yy2.reshape(yy2.shape[1],)
+print ("Y_TEST  = {}".format(y_test))
 print("y_test type {}".format(type(y_test[1])))
 yy_test_arr = []
 for yt in y_test:
-	int_yt = int(y)
+	int_yt = int(yt)
 	yy_test_arr.append(int_yt)
 
 print("Y test arr: {}".format(yy_test_arr))
