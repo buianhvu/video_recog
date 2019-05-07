@@ -8,6 +8,7 @@ import time
 def cal_Z(xx):
 	#n != N
 	#V domian size
+	V=5
 	d, N = xx.shape
 	n = N/5
 	K = np.zeros((V,V,n))
