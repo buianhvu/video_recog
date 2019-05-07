@@ -39,15 +39,13 @@ gg = np.array(gg)
 V = 5
 print("gg shape: {}".format(gg.shape))
 
-Z = slib.cal_Z(xx,V)
+# Z = slib.cal_Z(xx,V)
 #msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
 # from sklearn.svm import SVC
-print("msda_z starts ....")
-W, G = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V)
-np.save("W_np",W)
-np.save("G_np", G)
+# print("msda_z starts ....")
+# W, G = slib.msda_z(xx, gg, Z, 0.6, 1, 1, 1, 1, V)
 
-
+W = np.load("W_np.npy")
 
 #print("TESTING")
 # print("hw type: {}".format(hw))
