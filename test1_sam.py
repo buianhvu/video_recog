@@ -73,8 +73,7 @@ print("Y_TRAIN SHAPE: {}".format(y_train.shape))
 yy_train_arr = []
 for y in y_train:
 	int_y = int(y)
-	char_y = chr(int_y)
-	yy_train_arr.append(char_y)
+	yy_train_arr.append(int)
 # xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
 
 print ("Y train arr: {}".format(yy_train_arr))
@@ -91,8 +90,7 @@ print("y_test type {}".format(type(y_test[1])))
 yy_test_arr = []
 for yt in y_test:
 	int_yt = int(y)
-	char_yt = chr(int_yt)
-	yy_test_arr.append(char_yt)
+	yy_test_arr.append(int_yt)
 
 print("Y test arr: {}".format(yy_test_arr))
 score = clf.score(x_test, y_test)
