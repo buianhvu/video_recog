@@ -73,7 +73,7 @@ print("Y_TRAIN SHAPE: {}".format(y_train.shape))
 yy_train_arr = []
 for y in y_train:
 	int_y = int(y)
-	yy_train_arr.append(int)
+	yy_train_arr.append(int_y)
 # xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
 
 print ("Y train arr: {}".format(yy_train_arr))
