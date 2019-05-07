@@ -50,7 +50,7 @@ Z = slib.cal_Z(xx)
 # from sklearn.svm import SVC
 
 print("msda_z starts ....")
-Ws, Gs = slib.msda_z(xx, Z, 0.9, 1)
+Ws, Gs = slib.msda_z(xx, Z, 0.6, 1)
 W = Ws[-1]
 
 np.save("W_np",W)
