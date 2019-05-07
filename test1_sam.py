@@ -94,7 +94,7 @@ for yt in y_test:
 	yy_test_arr.append(int_yt)
 
 print("Y test arr: {}".format(yy_test_arr))
-score = clf.score(x_test, y_test)
+score = clf.score(x_test, yy_test_arr)
 print("calculating score ...")
 print("Score train on , test on X2: {}".format(score))
 
