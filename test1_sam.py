@@ -31,6 +31,10 @@ yy2 = yy2[:,:n]
 yy3 = yy3[:,:n]
 yy4 = yy4[:,:n]
 
+print("YY0 : {}".format(yy0))
+print("YY1 : {}".format(yy1))
+print("YY2 : {}".format(yy2))
+print("YY3 : {}".format(yy3))
 print("yy0 shape {}".format(yy0.shape))
 yy = np.concatenate((yy0, yy1, yy2, yy3, yy4), axis = 1) #1xN
 print("yy shape: {}".format(yy.shape))
