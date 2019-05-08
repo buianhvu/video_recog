@@ -19,7 +19,8 @@ def cal_Z(xx):
 				if i == j:
 					K[i, j, k] = 0
 				else:
-					K[i, j, k] = math.exp(-math.sqrt(np.sum(np.square(xx[:,k+n*i]-xx[:,k+n*j]))))/(2*2)
+					K[i, j, k] = math.exp(-math.sqrt(np.sum(np.square(xx[:,k+n*i]-xx[:,k+n*j])))/(2*2))
+
 			
 	# Z = np.zeros((V*n, V*n))
 	Z = scipy.linalg.block_diag(K[:,:,0], K[:,:,1])
