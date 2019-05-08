@@ -70,7 +70,8 @@ print("Initializing classifier: ")
 clf = KNeighborsClassifier(n_neighbors=1)
 
 x_train = hx_xx[:,0:2*n].transpose()
-y_train = [yy1,yy2].reshape(660,).astype(str)
+yy_train = np.array([yy1,yy2])
+y_train = yy_train.reshape(660,).astype(str)
 
 clf.fit(x_train, y_train)
 
