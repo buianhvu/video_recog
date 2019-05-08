@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.svm import SVC
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 from sklearn.neighbors import KNeighborsClassifier
+import sys
 print("loading yy...")
 yy = np.load("vectors/yy_np.npy")
 print("loading xx...")
@@ -49,6 +50,8 @@ Z = slib.cal_Z(xx)
 #msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
 # from sklearn.svm import SVC
 
+print (Z)
+sys.exit(1)
 print("msda_z starts ....")
 Ws, allhx = slib.msda_z(xx, Z, 0.6, 1)
 W = Ws[-1]
@@ -69,14 +72,16 @@ print("Initializing classifier: ")
 # clf = SVC(gamma='auto')
 clf = SVC()
 
-x_train = hx_xx[:,0:2*n].transpose()
-yy_train = np.array([yy1,yy2])
-y_train = yy_train.reshape(660,).astype(str)
+x_train = hx_xx[:,0:1*n].transpose()
+# yy_train = np.array([yy1,yy2])
+# y_train = yy_train.reshape(660,).astype(str)
+y_train = yy1.reshape(yy1.shape[1],).astype(int)
+
 
 clf.fit(x_train, y_train)
 
 x_test = hx_xx[:,n:2*n].transpose()
-y_test = yy1.reshape(yy1.shape[1],).astype(str)
+y_test = yy1.reshape(yy1.shape[1],).astype(int)
 
 predict = clf.predict(x_test)
 score = clf.score(x_test, y_test)

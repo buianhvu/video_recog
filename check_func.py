@@ -28,13 +28,24 @@ from sklearn.svm import SVC
 # print yy
 # print("yy shape {}".format(yy.shape))
 
-x_train = np.random.rand(3,5)
-y_train = ["a","b","c"]
-xx_test = np.random.rand(3,5)
-yy_test = ["a","b","c"]
+# x_train = np.random.rand(3,5)
+# y_train = ["a","b","c"]
+# xx_test = np.random.rand(3,5)
+# yy_test = ["a","b","c"]
 
-clf = SVC(gamma='auto')
-clf.fit(x_train, y_train)
+# clf = SVC(gamma='auto')
+# clf.fit(x_train, y_train)
 
-score = clf.score(xx_test, yy_test)
-print ("Score {}".format(score))
+# score = clf.score(xx_test, yy_test)
+# print ("Score {}".format(score))
+import scipy.linalg
+
+a = np.ones((2,2))
+b = np.zeros((2,2))
+c = np.ones((2,2))
+
+Z = scipy.linalg.block_diag(a, b)
+
+Z = scipy.linalg.block_diag(Z, c)
+
+print(Z)

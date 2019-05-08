@@ -19,15 +19,17 @@ def cal_Z(xx):
 				if i == j:
 					K[i, j, k] = 0
 				else:
-					K[i, j, k] = math.exp(-math.sqrt(np.sum(np.square(xx[:,k+n*i]-xx[:,k+n*j])))/(2*2))
-
+					x = xx[:,k+n*i]-xx[:,k+n*j]
+					K[i, j, k] = math.exp(math.sqrt(np.sum(np.square(x)))/(2*2))
+					# K(i,j,k)=exp(-sqrt(sum(xx(:,k+330*(i-1))-xx(:,k+330*(j-1))).^2/(2*2)));
 			
 	# Z = np.zeros((V*n, V*n))
+	print ("K shape: {}".format(K.shape))
 	Z = scipy.linalg.block_diag(K[:,:,0], K[:,:,1])
 	for i in range(n):
 		if i > 1:
 			Z = scipy.linalg.block_diag(Z, K[:,:,i])
-	print(Z.shape)
+	print("Z shape {}".format(Z.shape))
 	return Z
 	pass
 
