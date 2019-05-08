@@ -70,7 +70,7 @@ del Z
 #starting get accuracy
 print("Initializing classifier: ")
 # clf = SVC(gamma='auto')
-clf = SVC(gammar = 'auto')
+clf = SVC(gamma = 'auto')
 
 x_train = hx[:,0:1*n].transpose()
 # yy_train = np.array([yy1,yy2])
