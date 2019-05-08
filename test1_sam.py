@@ -67,7 +67,7 @@ del Z
 #starting get accuracy
 print("Initializing classifier: ")
 # clf = SVC(gamma='auto')
-clf = KNeighborsClassifier(n_neighbors=1)
+clf = SVC()
 
 x_train = hx_xx[:,0:2*n].transpose()
 yy_train = np.array([yy1,yy2])
