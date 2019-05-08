@@ -53,6 +53,8 @@ print("msda_z starts ....")
 Ws, allhx = slib.msda_z(xx, Z, 0.6, 1)
 W = Ws[-1]
 hx = allhx[-1]
+hx_xx = np.concatenate((xx,hx))
+print("hx_xx shape: {}".format(hx_xx.shape))
 print("hx shape: {}".format(hx.shape))
 print("W shape: {}".format(W.shape))
 # np.save("G_np", G)
