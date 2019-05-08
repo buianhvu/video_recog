@@ -72,7 +72,7 @@ print("Initializing classifier: ")
 # clf = SVC(gamma='auto')
 clf = SVC()
 
-x_train = hx_xx[:,0:1*n].transpose()
+x_train = hx[:,0:1*n].transpose()
 # yy_train = np.array([yy1,yy2])
 # y_train = yy_train.reshape(660,).astype(str)
 y_train = yy1.reshape(yy1.shape[1],).astype(int)
@@ -80,7 +80,7 @@ y_train = yy1.reshape(yy1.shape[1],).astype(int)
 
 clf.fit(x_train, y_train)
 
-x_test = hx_xx[:,n:2*n].transpose()
+x_test = hx[:,n:2*n].transpose()
 y_test = yy1.reshape(yy1.shape[1],).astype(int)
 
 predict = clf.predict(x_test)
