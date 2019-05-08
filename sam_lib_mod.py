@@ -124,7 +124,10 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 	print("Converging")
 	for converge in range(Converge):
 		print("Converge : {}".format(converge))
-		W = compute_gg_inve(G, beta, lambda_).dot(M) #update W
+		if(converge != 0):
+			W = compute_gg_inve(G, beta, lambda_).dot(M) #update W
+		else:
+			W = M
 		print("W type {} Wshape {}".format(type(W), W.shape))
 		W_to_G = beta*W.dot(W.transpose())+id_mat
 		inve_W_to_G = np.linalg.inv(W_to_G) #dxd
@@ -187,7 +190,7 @@ def msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V, Converge):
 		Gs.append(new_G)
 		prevhw = new_hw
 		prevhg = new_hg
-	return new_W, new_G
+	return new_hw, new_hg
 	pass
 
 

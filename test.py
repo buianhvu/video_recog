@@ -43,7 +43,7 @@ Z = slib.cal_Z(xx,V)
 #msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
 # from sklearn.svm import SVC
 print("msda_z starts ....")
-W, G = slib.msda_z(xx, gg, Z, 0.1, 1, 1, 1, 1, V, 6)
+new_hw, new_hg = slib.msda_z(xx, gg, Z, 0.1, 1, 1, 1, 1, V, 6)
 np.save("W_np",W)
 np.save("G_np", G)
 
@@ -56,42 +56,36 @@ del Z
 print("Initializing classifier: ")
 clf = SVC(gamma='auto')
 #multi-to-one if x2 is choose for test, then it is excluded from the training
-bias_train = np.ones((1,n))
-x_train = np.concatenate((xx1,bias_train), axis = 0)
-x_train = (W.dot(x_train)).transpose()
-x_train = np.tanh(x_train)
-y_train = yy1.reshape(yy1.shape[1],)
-yy_train_arr = []
+hx = new_hw
+print("hx_xx shape: {}".format(hx_xx.shape))
+print("hx shape: {}".format(hx.shape))
+print("W shape: {}".format(W.shape))
+# np.save("G_np", G)
 
-for y in y_train:
-	int_y = int(y)
-	yy_train_arr.append(int_y)
-# xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
+print("Finish msda_Z")
+
+#print("TESTING")
+# print("hw type: {}".format(hw))
+del Z
+#starting get accuracy
+print("Initializing classifier: ")
+# clf = SVC(gamma='auto')
+clf = SVC(gamma = 'auto')
+
+x_train = hx[:,0:1*n].transpose()
+# yy_train = np.array([yy1,yy2])
+# y_train = yy_train.reshape(660,).astype(str)
+y_train = yy1.reshape(yy1.shape[1],).astype(int)
 
 
+clf.fit(x_train, y_train)
 
-clf.fit(x_train, yy_train_arr)
-
-biases = np.ones((1, n))
-#supposed tested on xx2
-x_test = np.concatenate((xx2,biases), axis=0) #(d+1)xn
-x_test = W.dot(x_test) #(d+1, n)
-x_test = np.tanh(x_test)
-x_test = x_test.transpose() #feed to svm
-y_test = yy2.reshape(yy2.shape[1],)
-yy_test_arr = []
-for yt in y_test:
-	int_yt = int(yt)
-	yy_test_arr.append(int_yt)
-
-score = clf.score(x_test, yy_test_arr)
-print("Y TEST: {}".format(yy_test_arr))
-print("PREDICT: {}".format(clf.predict(x_train)))
-print("calculating score ...")
-print("Score train on , test on X2: {}".format(score))
+x_test = hx[:,n:2*n].transpose()
+y_test = yy1.reshape(yy1.shape[1],).astype(int)
 
 
 
-# # # yy0,yy1,yy2,yy3,yy4 = yy[0,:], 
-# print("done loading")
-
+predict = clf.predict(x_test)
+score = clf.score(x_test, y_test)
+print("PREDICT: {}".format(predict))
+print("SCORE : {}".format(score))
