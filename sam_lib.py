@@ -71,7 +71,7 @@ def mda_z(xx, Z, noise, _lambda):
 	pass
 def msda_z(xx, Z, noise, layers):
 	# lambda_ = 0.00001
-	lambda_ = 0.00001
+	lambda_ = 1
 	#xx : dxn input
 	#noise: corruption level
 	#layers: number of layers to stack
