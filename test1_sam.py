@@ -51,7 +51,7 @@ Z = slib.cal_Z(xx)
 # from sklearn.svm import SVC
 
 print (Z)
-sys.exit(1)
+# sys.exit(1)
 print("msda_z starts ....")
 Ws, allhx = slib.msda_z(xx, Z, 0.6, 1)
 W = Ws[-1]
