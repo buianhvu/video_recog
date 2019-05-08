@@ -53,6 +53,8 @@ print("msda_z starts ....")
 Ws, allhx = slib.msda_z(xx, Z, 0.6, 1)
 W = Ws[-1]
 hx = allhx[-1]
+print("hx length: {}".format(len(hx)))
+print("W shape: {}".format(W.shape))
 # np.save("G_np", G)
 
 print("Finish msda_Z")
