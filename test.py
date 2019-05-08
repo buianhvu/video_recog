@@ -44,20 +44,22 @@ Z = slib.cal_Z(xx,V)
 # from sklearn.svm import SVC
 print("msda_z starts ....")
 new_hw, new_hg = slib.msda_z(xx, gg, Z, 0.1, 1, 1, 1, 1, V, 6)
-np.save("W_np",W)
-np.save("G_np", G)
+# np.save("W_np",W)
+# np.save("G_np", G)
 
 
 
 #print("TESTING")
 # print("hw type: {}".format(hw))
 del Z
+
+
 #starting get accuracy
 print("Initializing classifier: ")
 clf = SVC(gamma='auto')
 #multi-to-one if x2 is choose for test, then it is excluded from the training
 hx = new_hw
-print("hx_xx shape: {}".format(hx_xx.shape))
+np.save("hx", hx)# print("hx_xx shape: {}".format(hx_xx.shape))
 print("hx shape: {}".format(hx.shape))
 print("W shape: {}".format(W.shape))
 # np.save("G_np", G)
