@@ -69,12 +69,12 @@ print("Initializing classifier: ")
 # clf = SVC(gamma='auto')
 clf = KNeighborsClassifier(n_neighbors=1)
 
-x_train = hx[:,0:n].transpose()
+x_train = hx_xx[:,0:n].transpose()
 y_train = yy1.reshape(yy1.shape[1],).astype(str)
 
 clf.fit(x_train, y_train)
 
-x_test = hx[:,n:2*n].transpose()
+x_test = hx_xx[:,n:2*n].transpose()
 y_test = yy1.reshape(yy1.shape[1],).astype(str)
 
 predict = clf.predict(x_test)
