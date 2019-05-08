@@ -47,6 +47,7 @@ def mda_z(xx, Z, noise, _lambda):
 	#corruption vector
 	q = np.ones((d+1,1))*(1-noise)
 	q[-1] = 1
+	print("q: ".format(q))
 	#Q d+1 x d+1
 	Q = np.multiply(S, q.dot(q.transpose()))
 	np.fill_diagonal(Q,np.multiply(q,np.diag(S)))
@@ -68,7 +69,7 @@ def mda_z(xx, Z, noise, _lambda):
 	pass
 def msda_z(xx, Z, noise, layers):
 	# lambda_ = 0.00001
-	lambda_ = 1
+	lambda_ = 0.00001
 	#xx : dxn input
 	#noise: corruption level
 	#layers: number of layers to stack
@@ -86,8 +87,9 @@ def msda_z(xx, Z, noise, layers):
 		time2 = time.time()-time1
 		print("Run in time: {}".format(time2))
 		Ws.append(new_W)
+		allhx.append(new_hx)
 		prevhx = new_hx
-	return Ws, new_hx
+	return Ws, allhx
 	pass
 
 

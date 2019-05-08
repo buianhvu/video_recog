@@ -50,10 +50,9 @@ Z = slib.cal_Z(xx)
 # from sklearn.svm import SVC
 
 print("msda_z starts ....")
-Ws, Gs = slib.msda_z(xx, Z, 0.6, 1)
+Ws, allhx = slib.msda_z(xx, Z, 0.6, 1)
 W = Ws[-1]
-
-np.save("W_np",W)
+hx = allhx[-1]
 # np.save("G_np", G)
 
 print("Finish msda_Z")
@@ -65,46 +64,16 @@ del Z
 print("Initializing classifier: ")
 # clf = SVC(gamma='auto')
 clf = KNeighborsClassifier(n_neighbors=1)
-#multi-to-one if x2 is choose for test, then it is excluded from the training
-bias_train = np.ones((1,n))
-x_train = np.concatenate((xx1,bias_train), axis = 0)
-x_train = (W.dot(x_train)).transpose()
-print("X_TRAIN SHAPE: {}".format(x_train.shape))
-y_train = yy1.reshape(yy1.shape[1],)
-print("Y_TRAIN SHAPE: {}".format(y_train.shape))
-# xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
-yy_train_arr = []
-for y in y_train:
-	int_y = int(y)
-	yy_train_arr.append(int_y)
-# xx = np.concatenate((xx,np.ones((1,xx.shape[1]))), axis = 0)
 
-print ("Y train arr: {}".format(yy_train_arr))
-clf.fit(x_train, yy_train_arr)
+x_train = allhx[:,0:n].transpose()
+y_train = yy1.reshape(yy1.shape[1],).astype(str)
 
-biases = np.ones((1, n))
-#supposed tested on xx2
-x_test = np.concatenate((xx2,biases), axis=0) #(d+1)xn
-x_test = W.dot(x_test) #(d+1, n)
-x_test = x_test.transpose() #feed to svm
+clf.fit(x_train, y_train)
 
-y_test = yy2.reshape(yy2.shape[1],)
-print ("Y_TEST  = {}".format(y_test))
-print("y_test type {}".format(type(y_test[1])))
-yy_test_arr = []
-for yt in y_test:
-	int_yt = int(yt)
-	yy_test_arr.append(int_yt)
+x_test = allhx[:,n:2*n].transpose()
+y_test = yy1.reshape(yy1.shape[1],).astype(str)
 
 predict = clf.predict(x_test)
-print("predict: {}".format(predict))
-print("Y test arr: {}".format(yy_test_arr))
-score = clf.score(x_test, yy_test_arr)
-print("calculating score ...")
-print("Score train on , test on X2: {}".format(score))
-
-
-
-# # # yy0,yy1,yy2,yy3,yy4 = yy[0,:], 
-# print("done loading")
-
+score = clf.score(x_test, y_test)
+print("PREDICT: {}".format(predict))
+print("SCORE : {}".format(score))
