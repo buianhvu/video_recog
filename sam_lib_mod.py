@@ -50,7 +50,7 @@ def find_loss_1(W, X, Z, V, G, GG,alpha, beta):
 	d = W.shape[0]
 	zr = np.zeros((d+1, d+1))
 	diff_G = 0
-	Q = q.dot(q.transpose())
+	# Q = q.dot(q.transpose())
 	for i in range (V):
 		diff_G = diff_G + alpha*distance(G[i].dot(GG[i]), GG[i][0:d,:], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
 	loss = distance(W.dot(X), X.dot(Z), 2) + diff_G
@@ -58,7 +58,7 @@ def find_loss_1(W, X, Z, V, G, GG,alpha, beta):
 def find_loss(W, q, X, Z, V, G, GG,alpha, beta):
 	zr = np.zeros((W.shape[0], W.shape[0]))
 	diff_G = 0
-	Q = q.dot(q.transpose())
+	# Q = q.dot(q.transpose())
 	for i in range (V):
 		diff_G = diff_G + alpha*distance(G[i].dot(Q.dot(GG[i])), GG[i], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
 	loss = distance(W.dot(Q.dot(X)), X.dot(Z), 2) + diff_G
@@ -124,17 +124,22 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 	del Q; del P;
 
 	#some pre-data for computing Gv:
-	G_R = []
-	for view in range(V):
-		print('view: {}'.format(view))
-		SG = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
-		QG = np.multiply(SG, q.dot(q.transpose())) #shape d+1 x d+1
-		np.fill_diagonal(QG, np.multiply(q,np.diag(SG))) #d+1 x d+1
-		PG = np.multiply(SG[0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
-		temp = (alpha*PG).dot(np.linalg.inv(alpha*QG+reg)) #dx(d+1)
-		G_R.append(temp)
-		# np.save("g_r",gr)
-		
+	exists = os.path.isfile('g_r.npy')
+	if exists:
+		G_R = np.load('g_r.npy')
+	else:	
+		G_R = []
+		if(os.ex)
+		for view in range(V):
+			print('view: {}'.format(view))
+			SG = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
+			QG = np.multiply(SG, q.dot(q.transpose())) #shape d+1 x d+1
+			np.fill_diagonal(QG, np.multiply(q,np.diag(SG))) #d+1 x d+1
+			PG = np.multiply(SG[0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
+			temp = (alpha*PG).dot(np.linalg.inv(alpha*QG+reg)) #dx(d+1)
+			G_R.append(temp)
+		np.save("g_r",gr)
+			
 
 
 	print('check point 0:')
