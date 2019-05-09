@@ -161,8 +161,10 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 			#update G[view]
 			G[view] = inve_W_to_G.dot(temp) #dx(d+1)
 			print("End updating G{}".format(view))
-		print ("Loss at {}: {}".format(find_loss(W, q, zz, Z, 5, G, GG,alpha, beta)))
-
+		t_1 = time.time() 
+		print ("Loss at {}: {}".format(converge,find_loss(W, q, zz, Z, 5, G, GG,alpha, beta)))
+		t_2 = time.time()
+		print("time cal loss: {}".format(t_2-t_1))
 
 	print("Converging done")
 	# print("W shape {}".format(W.shape))
