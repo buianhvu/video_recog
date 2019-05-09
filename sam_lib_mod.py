@@ -46,12 +46,13 @@ def distance(a,b, i):
 	print("Sum bug: {}".format(i))
 	return math.sqrt(np.sum(np.square(a-b)))
 
-find_loss_1(W,W, q, X, Z, V, G, GG,alpha, beta)
-	zr = np.zeros((W.shape[1], W.shape[1]))
+def find_loss_1(W, X, Z, V, G, GG,alpha, beta):
+	d = W.shape[0]
+	zr = np.zeros((d+1, d+1))
 	diff_G = 0
 	Q = q.dot(q.transpose())
 	for i in range (V):
-		diff_G = diff_G + alpha*distance(G[i].dot(GG[i]), GG[i], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
+		diff_G = diff_G + alpha*distance(G[i].dot(GG[i]), GG[i][:,0:d], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
 	loss = distance(W.dot(X), X.dot(Z), 2) + diff_G
 	return loss
 def find_loss(W, q, X, Z, V, G, GG,alpha, beta):
@@ -160,7 +161,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 			G[view] = inve_W_to_G.dot(G_R[view]) #dx(d+1)
 			print("End updating G{}".format(view))
 		t_1 = time.time() 
-		print ("Loss at {}: {}".format(converge,find_loss(W, q, xx, Z, 5, G, GG,alpha, beta)))
+		print ("Loss at {}: {}".format(converge,find_loss_1(W, xx, Z, 5, G, GG,alpha, beta)))
 		t_2 = time.time()
 		print("time cal loss: {}".format(t_2-t_1))
 
