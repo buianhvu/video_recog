@@ -42,7 +42,8 @@ def cal_Z(xx,V):
 	return Z
 	pass
 
-def distance(a,b):
+def distance(a,b, i):
+	print("Sum bug: {}".format(i))
 	return math.sqrt(np.sum(np.square(a-b)))
 
 def find_loss(W, q, X, Z, V, G, GG,alpha, beta):
@@ -50,8 +51,8 @@ def find_loss(W, q, X, Z, V, G, GG,alpha, beta):
 	diff_G = 0
 	Q = q.dot(q.transpose())
 	for i in range (V):
-		diff_G = diff_G + alpha*distance(G[i].dot(Q.dot(GG[i])), GG[i]) + beta*diff(W.transpose().dot(G[i]), zr)
-	loss = distance(W.dot(Q.dot(X)), X.dot(Z)) + diff_G
+		diff_G = diff_G + alpha*distance(G[i].dot(Q.dot(GG[i])), GG[i], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
+	loss = distance(W.dot(Q.dot(X)), X.dot(Z), 2) + diff_G
 	return loss
 
 def compute_gg_inve(G, beta, _lambda):
