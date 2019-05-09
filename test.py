@@ -40,6 +40,8 @@ V = 5
 print("gg shape: {}".format(gg.shape))
 
 Z = slib.cal_Z(xx,V)
+a = np.load('Z.npy')
+Z = a
 #msda_z(xx, gg, Z, noise, layers, lambda_, alpha, beta, V):
 # from sklearn.svm import SVC
 print("msda_z starts ....")

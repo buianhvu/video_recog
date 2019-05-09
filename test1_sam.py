@@ -21,6 +21,8 @@ xx2 = xx2[:,:n]
 xx3 = xx3[:,:n]
 xx4 = xx4[:,:n]
 
+#test on x2:
+# xx2 = np.zeros((xx2.shape[0], n))
 #concatenate
 xx = np.concatenate((xx0,xx1,xx2,xx3,xx4),axis = 1) #xx dxN
 print("xx1 shape: {}".format(xx1.shape))
