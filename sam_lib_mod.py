@@ -31,7 +31,7 @@ def cal_Z(xx,V):
 					K[i, j, k] = 0
 				else:
 					diff = xx[:,k+i*n]-xx[:,k+j*n]
-					K[i, j, k] = math.exp(math.sqrt(np.sum(np.square(diff))))/(2*2)
+					K[i, j, k] = math.exp(math.sqrt(np.sum(np.square(diff)))/(2*2))
 			
 	# Z = np.zeros((V*n, V*n))
 	Z = K[:,:,0]
@@ -42,7 +42,17 @@ def cal_Z(xx,V):
 	return Z
 	pass
 
+def distance(a,b):
+	return math.sqrt(np.sum(np.square(a-b)))
 
+def find_loss(W, q, X, Z, V, G, GG,alpha, beta):
+	zr = np.zeros((W.shape[0], W.shape[0]))
+	diff_G = 0
+	Q = q.dot(q.transpose())
+	for i in range (V):
+		diff_G = diff_G + alpha*distance(G[i].dot(Q.dot(GG[i])), GG[i]) + beta*diff(W.transpose().dot(G[i]), zr)
+	loss = distance(W.dot(Q.dot(X)), X.dot(Z)) + diff_G
+	return loss
 
 def compute_gg_inve(G, beta, _lambda):
 	dim = G[0].shape[0] #dim = d
@@ -85,6 +95,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 	# print Sz[0:d,:]
 	#corruption vector
 	q = np.ones((d+1,1))*(1-noise)
+	x_corp = (q.dot(q.transpose())).dot(xxb)
 	q[-1] = 1
 	#Q d+1 x d+1
 	Q = np.multiply(S, q.dot(q.transpose()))
@@ -150,6 +161,8 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 			#update G[view]
 			G[view] = inve_W_to_G.dot(temp) #dx(d+1)
 			print("End updating G{}".format(view))
+		print ("Loss at {}: {}".format(find_loss(W, q, zz, Z, 5, G, GG,alpha, beta):))
+
 
 	print("Converging done")
 	# print("W shape {}".format(W.shape))

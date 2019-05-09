@@ -44,7 +44,7 @@ Z = slib.cal_Z(xx,V)
 # from sklearn.svm import SVC
 print("msda_z starts ....")
 new_hw, new_hg = slib.msda_z(xx, gg, Z, 0.1, 1, 1, 1, 1, V, 6)
-# np.save("W_np",W)
+np.save("new_hw",new_hw)
 # np.save("G_np", G)
 
 
