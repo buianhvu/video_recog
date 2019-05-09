@@ -129,7 +129,6 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 		G_R = np.load('g_r.npy')
 	else:	
 		G_R = []
-		if(os.ex)
 		for view in range(V):
 			print('view: {}'.format(view))
 			SG = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
@@ -138,7 +137,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 			PG = np.multiply(SG[0:d,:], np.tile(q.transpose(),(d,1))) #dx(d+1)
 			temp = (alpha*PG).dot(np.linalg.inv(alpha*QG+reg)) #dx(d+1)
 			G_R.append(temp)
-		np.save("g_r",gr)
+		np.save("g_r",G_R)
 			
 
 
