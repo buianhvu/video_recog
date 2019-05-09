@@ -109,7 +109,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 	# print("reg shape {}".format(reg.shape))
 	reg[d,d] = 0
 	#W dx(d+1)
-	del S; del xxz; del Z;
+	del S; del xxz;
 	M = P.dot(np.linalg.inv(Q+reg))
 	del Q; del P;
 
