@@ -124,7 +124,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 	del Q; del P;
 
 	#some pre-data for computing Gv:
-	
+	G_R = []
 	for view in range(V):
 		print('view: {}'.format(view))
 		SG = GG[view].dot(GG[view].transpose()) #each has shape d+1 x d+1
