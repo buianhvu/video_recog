@@ -52,7 +52,7 @@ def find_loss_1(W, X, Z, V, G, GG,alpha, beta):
 	diff_G = 0
 	Q = q.dot(q.transpose())
 	for i in range (V):
-		diff_G = diff_G + alpha*distance(G[i].dot(GG[i]), GG[i][:,0:d], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
+		diff_G = diff_G + alpha*distance(G[i].dot(GG[i]), GG[i][0:d,:], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
 	loss = distance(W.dot(X), X.dot(Z), 2) + diff_G
 	return loss
 def find_loss(W, q, X, Z, V, G, GG,alpha, beta):
