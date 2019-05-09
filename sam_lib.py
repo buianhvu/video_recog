@@ -4,6 +4,15 @@ import scipy.linalg
 import time
 
 
+def distance(a,b):
+	
+	return math.sqrt(np.sum(np.square(a-b)))
+
+def test_loss(W, x,Z):
+	d = W.shape[0]
+	loss = distance(W.dot(x), x.dot(Z)[0:d,:])
+	print ("\n\nLoss\n\n : {}".format(loss))
+
 #Z VnxVn
 def cal_Z(xx):
 	#n != N
@@ -67,11 +76,12 @@ def mda_z(xx, Z, noise, _lambda):
 	# print("W shape {}".format(W.shape))
 	hx = W.dot(xxb)
 	hx = np.tanh(hx)
+	test_loss(W, xxb,Z)
 	return W, hx
 	pass
 def msda_z(xx, Z, noise, layers):
 	# lambda_ = 0.00001
-	lambda_ = 1
+	lambda_ = 0.0001
 	#xx : dxn input
 	#noise: corruption level
 	#layers: number of layers to stack

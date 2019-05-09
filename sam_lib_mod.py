@@ -53,16 +53,16 @@ def find_loss_1(W, X, Z, V, G, GG,alpha, beta):
 	# Q = q.dot(q.transpose())
 	for i in range (V):
 		diff_G = diff_G + alpha*distance(G[i].dot(GG[i]), GG[i][0:d,:], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
-	loss = distance(W.dot(X), X.dot(Z), 2) + diff_G
+	loss = distance(W.dot(X), X.dot(Z)[0:d,:], 2) + diff_G
 	return loss
-def find_loss(W, q, X, Z, V, G, GG,alpha, beta):
-	zr = np.zeros((W.shape[0], W.shape[0]))
-	diff_G = 0
-	# Q = q.dot(q.transpose())
-	for i in range (V):
-		diff_G = diff_G + alpha*distance(G[i].dot(Q.dot(GG[i])), GG[i], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
-	loss = distance(W.dot(Q.dot(X)), X.dot(Z), 2) + diff_G
-	return loss
+# def find_loss(W, q, X, Z, V, G, GG,alpha, beta):
+# 	zr = np.zeros((W.shape[0], W.shape[0]))
+# 	diff_G = 0
+# 	# Q = q.dot(q.transpose())
+# 	for i in range (V):
+# 		diff_G = diff_G + alpha*distance(G[i].dot(Q.dot(GG[i])), GG[i], 0) + beta*distance(W.transpose().dot(G[i]), zr, 1)
+# 	loss = distance(W.dot(Q.dot(X)), X.dot(Z), 2) + diff_G
+# 	return loss
 
 def compute_gg_inve(G, beta, _lambda):
 	dim = G[0].shape[0] #dim = d
@@ -162,7 +162,7 @@ def mda_z(xx, gg, Z, noise, lambda_, alpha, beta, V, Converge):
 			G[view] = inve_W_to_G.dot(G_R[view]) #dx(d+1)
 			print("End updating G{}".format(view))
 		t_1 = time.time() 
-		print ("Loss at {}: {}".format(converge,find_loss_1(W, xx, Z, 5, G, GG,alpha, beta)))
+		print ("Loss at {}: {}".format(converge,find_loss_1(W, xxb, Z, 5, G, GG,alpha, beta)))
 		t_2 = time.time()
 		print("time cal loss: {}".format(t_2-t_1))
 

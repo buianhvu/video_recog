@@ -53,7 +53,7 @@ Z = slib.cal_Z(xx)
 print (Z)
 # sys.exit(1)
 print("msda_z starts ....")
-Ws, allhx = slib.msda_z(xx, Z, 0.6, 1)
+Ws, allhx = slib.msda_z(xx, Z, 0, 1)
 W = Ws[-1]
 hx = allhx[-1]
 hx_xx = np.concatenate((xx,hx))
@@ -82,6 +82,8 @@ clf.fit(x_train, y_train)
 
 x_test = hx[:,n:2*n].transpose()
 y_test = yy1.reshape(yy1.shape[1],).astype(int)
+
+
 
 predict = clf.predict(x_test)
 score = clf.score(x_test, y_test)
